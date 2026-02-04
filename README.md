@@ -51,3 +51,50 @@ Ratios close to 1 indicate good calibration.
 
 ## Notes
 The original dataset is provided by the CAS Predictive Modeling Case Competition and is not publicly shareable.
+
+## Approach (Model 2)
+Models are fit separately for each coverage:
+- Additional Living Expense
+- Personal Property
+- Guest Medical
+- Liability
+
+Each coverage uses a two part frequency severity structure:
+- Frequency: Poisson GLM on claim count (`claim_n`)
+- Severity: Gamma GLM (log link) on average paid per claim (`avg_paid`) for claimants
+
+Expected loss is computed as:
+- Expected Loss = E[Claim Count] × E[Avg Severity]
+
+The model then applies calibration and stabilization before converting losses to premiums.
+
+## Inputs / Risk Factors
+- Risk tier
+- On/off campus
+- Sprinklered building
+- Greek affiliation
+- Distance to campus (banded)
+
+GPA and gender are not used in Model 2.
+
+## Stabilization + Pricing Controls
+- Severity capping by coverage (high percentile caps)
+- Partial uncapping adjustment to restore some tail risk
+- Out of fold (OOF) coverage-level calibration with credibility shrinkage
+- Predicted loss caps by coverage
+- Liability blending toward tier mean due to low volume
+- Tier base loss credibility smoothing
+- Within-tier relativity shrinkage and caps to limit premium dispersion
+
+## Validation (Holdout)
+Performance is checked on the holdout split using Predicted / Actual mean loss by coverage:
+
+- Additional Living Expense: ~0.99
+- Guest Medical: ~1.11
+- Liability: ~0.74
+- Personal Property: ~1.07
+
+## Files
+- `model2.R` — full modeling + pricing pipeline (final)
+- `student_totals_model2.csv` — final output: annual premiums per student (`total_renew`, `total_new`)
+- `model1.R` — earlier version (logistic frequency + Gamma severity)
