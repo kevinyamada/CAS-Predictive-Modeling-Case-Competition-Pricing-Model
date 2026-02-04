@@ -80,11 +80,11 @@ GPA and gender are not used in Model 2.
 ## Stabilization + Pricing Controls
 - Severity capping by coverage (high percentile caps)
 - Partial uncapping adjustment to restore some tail risk
-- Out of fold (OOF) coverage-level calibration with credibility shrinkage
+- Out of fold (OOF) coverage level calibration with credibility shrinkage
 - Predicted loss caps by coverage
 - Liability blending toward tier mean due to low volume
 - Tier base loss credibility smoothing
-- Within-tier relativity shrinkage and caps to limit premium dispersion
+- Within tier relativity shrinkage and caps to limit premium dispersion
 
 ## Validation (Holdout)
 Performance is checked on the holdout split using Predicted / Actual mean loss by coverage:
