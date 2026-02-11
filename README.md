@@ -94,6 +94,14 @@ Performance is checked on the holdout split using Predicted / Actual mean loss b
 - Liability: ~0.74
 - Personal Property: ~1.07
 
+## Model 3
+Removed Greek risk factor for interpretability
+
+- Additional Living Expense: ~1.05
+- Guest Medical: ~1.21
+- Liability: ~0.755
+- Personal Property: ~1.08
+
 ## Files
 - `model2.R` — full modeling + pricing pipeline (final)
 - `student_totals_model2.csv` — final output: annual premiums per student (`total_renew`, `total_new`)
